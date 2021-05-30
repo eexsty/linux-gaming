@@ -1,0 +1,20 @@
+#!/bin/bash
+
+function parse_property {
+    echo "$(cut -d "=" -f2- <<< "$(grep -w "$1=" settings.properties)")"
+}
+
+WINEPREFIX="$(parse_property "WINEPREFIX")"
+WINE_BIN="$(parse_property "WINE_BIN")"
+
+if ! [ -e "$WINE_BIN" ]; then
+    echo "Invalid wine bin; wine binary not found."
+    exit 0
+fi
+
+export WINEARCH=win32
+export WINEPREFIX
+export WINE_BIN
+
+echo "Loaded Wine prefix - $WINEPREFIX"
+echo "Loaded Wine binary - $WINE_BIN"

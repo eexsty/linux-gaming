@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# Ensuring winetricks is installed.
+if ! type -t "winetricks" &> /dev/null; then
+    read -p "Winetricks is not installed. We've a winetricks installer built-in. You want to proceed with the installation? ([y]es or [N]o): "
+    case $(echo $REPLY | tr '[A-Z]' '[a-z]') in
+        y|yes) install_wine_tricks ;;
+        *) exit 0 ;;
+    esac
+fi
+
+# Ensuring Wine is installed.
+if ! type -t "wine" &> /dev/null; then
+    echo "Wine is not installed. We highly recommend installing the staging build."
+    exit 0
+fi
+
+# Install winetricks in any distro.
+function install_wine_tricks() {
+    # Checking if the distro is Debian-based
+    if [ -f "/etc/debian_version" ]; then
+        echo "We have detected that the distribution in use is based on Debian. Proceeding with the winetricks installation..."
+        sudo apt-get install winetricks
+    else
+        # Checking for other distros
+        DISTRO_INFO="$(cut -d "=" -f2- <<< "$(cat /etc/*-release | grep DISTRIB_ID)")"
+        case $(echo $DISTRO_INFO | tr '[A-Z]' '[a-z]') in
+            arch|manjaro)
+                echo "We have detected that the distribution in use is based on Arch Linux. Proceeding with the winetricks installation..."
+                sudo pacman -Syy winetricks ;;
+            *)
+                echo "There is not built-in support for $DISTRO_INFO. Proceeding with standard installation."
+                echo "This may be a little bit harder way to update their packages in the future."
+                wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
+                chmod +x winetricks
+                sudo mv winetricks /usr/bin/
+        esac
+    fi
+}
+
+if ! [ -e "./_installer.exe" ]; then
+    wget -O _installer.exe "https://ys-api-os.mihoyo.com/event/download_porter/link/ys_global/genshinimpactpc/default"
+fi
+
+. ./common
+
+# Create Wine prefix and execute installer.
+if ! [ -d "$WINEPREFIX" ]; then
+    # Setup required dependencies.
+    winetricks --unattended vcrun2019 arial
+    "$WINE_BIN" "$PWD/_installer.exe"
+fi
+
+"${WINE_BIN}server" -k
+LAUNCHER_PATH="$WINEPREFIX/drive_c/Program Files/Genshin Impact/launcher.exe"
+"$WINE_BIN" "$LAUNCHER_PATH"

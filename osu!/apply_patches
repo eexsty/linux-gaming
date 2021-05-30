@@ -1,0 +1,18 @@
+#!/bin/bash
+
+. "$PWD/common"
+cat > dsound.reg << "EOF"
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Wine\DirectSound]
+"HelBuflen"="512"
+"SndQueueMax"="3"
+
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"Wallpaper"=""
+
+[HKEY_CURRENT_USER\Control Panel\Colors]
+"Background"="0 0 0"
+EOF
+"$WINE_BIN" regedit dsound.reg
+rm -rf dsound.reg

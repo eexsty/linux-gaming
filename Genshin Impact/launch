@@ -1,0 +1,7 @@
+#!/bin/bash
+
+. ./common
+
+export DXVK_LOG_PATH="$PWD/logs"
+GAME_DIR="$PWD/files/drive_c/Program Files/Genshin Impact/Genshin Impact game"
+gamemoderun "$WINE_BIN" "$GAME_DIR/GenshinImpact.exe"

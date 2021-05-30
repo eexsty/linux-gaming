@@ -1,0 +1,18 @@
+#!/bin/bash
+
+. ./common
+
+PATCHES_DIR="$PWD/patches/$GENSHIN_IMPACT_VERSION"
+GAME_DIR="$PWD/files/drive_c/Program Files/Genshin Impact/Genshin Impact game"
+
+if ! [ -d "$PWD/patches" ]; then
+    git clone https://notabug.org/Krock/GI-on-Linux.git patches
+
+    (cd "$PWD/patches" && git clone wget https://github.com/Sporif/dxvk-async/releases/download/1.8.1/dxvk-async-1.8.1.tar.gz)
+    (cd "$PWD/patches" && tar -xzvf dxvk-async-1.8.1.tar.gz)
+    chmod +x "$PWD/patches"/dxvk-async-1.8.1/setup_dxvk.sh
+fi
+
+"$PWD/patches"/dxvk-async-1.8.1/setup_dxvk.sh install
+(cd "$GAME_DIR" && bash "$PATCHES_DIR"/patch.sh)
+(cd "$GAME_DIR" && bash "$PATCHES_DIR"/patch_anti_logincrash.sh)

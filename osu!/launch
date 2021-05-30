@@ -1,0 +1,6 @@
+#!/bin/bash
+
+. "$PWD/common"
+
+OSU_DIR="$PWD/files/drive_c/users/$USER/Local Settings/Application Data/osu!"
+gamemoderun "$WINE_BIN" "$OSU_DIR/osu!.exe"
