@@ -12,6 +12,7 @@ export WRAPPER_COMMAND="$(parse_property "WRAPPER_COMMAND")"
 export DXVK_ASYNC="$(parse_property "DXVK_ASYNC")"
 export WINEESYNC="$(parse_property "WINEESYNC")"
 export WINEFSYNC="$(parse_property "WINEFSYNC")"
+export RADV_PERFTEST="aco"
 
 if ! [ -e "$WINE_BIN" ]; then
     echo "Invalid wine bin; wine binary not found."
