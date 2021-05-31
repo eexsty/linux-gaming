@@ -46,7 +46,8 @@ fi
 
 # Create Wine prefix and execute installer + setup required dependencies.
 if ! [ -d "$WINEPREFIX" ]; then
-    winetricks --unattended --force dotnet45 gdiplus vlgothic cjkfonts
+    winetricks --unattended --force dotnet48 gdiplus vlgothic cjkfonts
 fi
+
 wineserver -k
 "$WINE_BIN" "$PWD/_installer.exe"
