@@ -5,4 +5,6 @@ A collection of scripts to help you install games on Linux, including recommenda
 ## How to setup
 
 Clone this repository and find out the game you want to install. Edit the `settings.properties` file according to your preferences then run the scripts in this order:
-`install` (for Genshin Impact, run `run_launcher` then install the game) -> `apply_patches` -> `launch`
+1. `install` (for Genshin Impact, run `run_launcher` then install the game)
+2. `apply_patches`
+3. `launch`
