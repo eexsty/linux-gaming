@@ -3,4 +3,4 @@
 . "$PWD/common"
 
 OSU_DIR="$PWD/files/drive_c/users/$USER/Local Settings/Application Data/osu!"
-"$WRAPPER_COMMAND" "$WINE_BIN" "$OSU_DIR/osu!.exe"
+"$WRAPPER_COMMAND" "$WINE_BIN" "$OSU_DIR/osu!.exe" --gst-disable-segtrap --gst-disable-registry-fork "$@"
