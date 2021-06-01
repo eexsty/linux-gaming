@@ -42,7 +42,7 @@ dependencies() {
             case $DISTRO in
                 "Arch Linux"|"Manjaro Linux")
                     INSTALL_STATEMENT="pacman -S" ;;
-                *"buntu"|"Linux Mint"|"Debian*"|"Zorin OS"|"Pop!_OS"|"elementary OS"|"KDE neon")
+                *"buntu"|"Linux Mint"|"Debian"*|"Zorin OS"|"Pop!_OS"|"elementary OS"|"KDE neon")
                     INSTALL_STATEMENT="apt install" ;;
                 "Fedora")
                     INSTALL_STATEMENT="dnf install" ;;
