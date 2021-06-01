@@ -1,18 +1,35 @@
 #!/bin/bash
 
-. ./common
+escape_code() {
+    echo "\033[$1m"
+}
 
-PATCHES_DIR="$PWD/patches/$GENSHIN_IMPACT_VERSION"
-GAME_DIR="$PWD/files/drive_c/Program Files/Genshin Impact/Genshin Impact game"
+SUCCESS_PREFIX="$(escape_code "0;32")✓$(escape_code 0)"
 
-if ! [ -d "$PWD/patches" ]; then
-    git clone https://notabug.org/Krock/GI-on-Linux.git patches
+load_properties() {
+    . ./variables.exports
+    echo -e "$SUCCESS_PREFIX Loaded properties on $(uname -om)."
+}
 
-    (cd "$PWD/patches" && git clone wget https://github.com/Sporif/dxvk-async/releases/download/1.8.1/dxvk-async-1.8.1.tar.gz)
+apply_dxvk() {
+    (cd "$PWD/patches" && wget https://github.com/Sporif/dxvk-async/releases/download/1.8.1/dxvk-async-1.8.1.tar.gz)
     (cd "$PWD/patches" && tar -xzvf dxvk-async-1.8.1.tar.gz)
     chmod +x "$PWD/patches"/dxvk-async-1.8.1/setup_dxvk.sh
+    "$PWD/patches"/dxvk-async-1.8.1/setup_dxvk.sh install
+}
+
+apply_game_patches() {
+    git clone https://notabug.org/Krock/GI-on-Linux.git patches
+    (cd "$GAME_DIR" && bash "$PATCHES_DIR"/patch.sh)
+    (cd "$GAME_DIR" && bash "$PATCHES_DIR"/patch_anti_logincrash.sh)
+}
+
+load_properties
+
+if ! [ -d "$PWD/patches" ]; then
+    PATCHES_DIR="$PWD/patches/$GENSHIN_IMPACT_VERSION"
+    GAME_DIR="$PWD/files/drive_c/Program Files/Genshin Impact/Genshin Impact game"
+    apply_game_patches
+    apply_dxvk
 fi
 
-"$PWD/patches"/dxvk-async-1.8.1/setup_dxvk.sh install
-(cd "$GAME_DIR" && bash "$PATCHES_DIR"/patch.sh)
-(cd "$GAME_DIR" && bash "$PATCHES_DIR"/patch_anti_logincrash.sh)

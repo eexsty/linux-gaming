@@ -1,7 +1,16 @@
 #!/bin/bash
 
-. "$PWD/common"
+escape_code() {
+    echo "\033[$1m"
+}
 
+SUCCESS_PREFIX="$(escape_code "0;32")✓$(escape_code 0)"
+
+load_properties() {
+    . ./variables.exports
+    echo -e "$SUCCESS_PREFIX Loaded properties on $(uname -om)."
+}
+
+load_properties
 OSU_DIR="$PWD/files/drive_c/users/$USER/Local Settings/Application Data/osu!"
-
 ln -sv "$OSU_DIR" ~/.osu

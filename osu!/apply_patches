@@ -1,7 +1,18 @@
 #!/bin/bash
 
-. "$PWD/common"
-cat > dsound.reg << "EOF"
+escape_code() {
+    echo "\033[$1m"
+}
+
+SUCCESS_PREFIX="$(escape_code "0;32")✓$(escape_code 0)"
+
+load_properties() {
+    . ./variables.exports
+    echo -e "$SUCCESS_PREFIX Loaded properties on $(uname -om)."
+}
+
+apply_regedit_patches() {
+    cat > dsound.reg << "EOF"
 Windows Registry Editor Version 5.00
 
 [HKEY_CURRENT_USER\Software\Wine\DirectSound]
@@ -14,5 +25,10 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Control Panel\Colors]
 "Background"="0 0 0"
 EOF
-"$WINE_BIN" regedit dsound.reg
-rm -rf dsound.reg
+
+    "$WINE_BIN" regedit dsound.reg
+    rm -rf dsound.reg
+}
+
+load_properties
+apply_regedit_patches

@@ -1,7 +1,17 @@
 #!/bin/bash
 
-. ./common
+escape_code() {
+    echo "\033[$1m"
+}
 
+SUCCESS_PREFIX="$(escape_code "0;32")✓$(escape_code 0)"
+
+load_properties() {
+    . ./variables.exports
+    echo -e "$SUCCESS_PREFIX Loaded properties on $(uname -om)."
+}
+
+load_properties
 export DXVK_LOG_PATH="$PWD/logs"
 GAME_DIR="$PWD/files/drive_c/Program Files/Genshin Impact/Genshin Impact game"
-"$WRAPPER_COMMAND" "$WINE_BIN" "$GAME_DIR/GenshinImpact.exe" "$@"
+$WRAPPER_COMMAND "$WINE_BIN" "$GAME_DIR/GenshinImpact.exe" "$@"
