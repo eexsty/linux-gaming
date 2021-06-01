@@ -2,6 +2,13 @@
 
 A collection of scripts to help you install games on Linux, including recommendations for an optimal performance.
 
+## Recommendations
+
+* Do not install Wine Mono or Gecko.
+* Use the Staging version of Wine, or if you prefer, Proton or Wine TKG.
+* Use Feral's gamemode (set as default wrapper command).
+<!-- * **osu!** Use the 'create_link` script to easier beatmap and skin management. -->
+
 ## How to setup
 
 We highly recommend using a custom build of Wine through Wine-TKG, due to its performance improvements over the official version. You can follow a guide on how to setup
