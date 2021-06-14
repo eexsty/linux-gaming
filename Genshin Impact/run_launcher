@@ -17,6 +17,7 @@ escape_code() {
 SUCCESS_PREFIX="$(escape_code "0;32")✓$(escape_code 0)"
 QUESTION_PREFIX="$(escape_code "0;36")❓$(escape_code 0)"
 ERROR_PREFIX="$(escape_code "0;31")❌$(escape_code 0)"
+#WARNING_PREFIX="$(escape_code "1;33")⚠$(escape_code 0)"
 
 load_properties() {
     . ./variables.exports
@@ -60,8 +61,14 @@ dependencies() {
 }
 
 install_again() {
-    winetricks --unattended --force vcrun2019 arial
-    "$WINE_BIN" "$PWD/_installer.exe"
+    if ! [ -d "$WINEPREFIX" ]; then
+        read -p "$(echo -e "${QUESTION_PREFIX}Do you want to open the Wine configuration window? (y/N): ")" prompt
+        if [[ $prompt =~ [yY](es)* ]]; then
+            "${WINE_BIN}cfg"
+        fi
+    fi
+    winetricks --unattended --force vcrun2019
+    "$WINE_BIN" ./_installer.exe
 }
 
 launch() {
@@ -79,7 +86,7 @@ launch() {
 }
 
 if [ -x "$DISTRO" ]; then
-    echo  -e "$ERROR_PREFIX Could not detect your operational system. You will be not able to install dependencies through this script."
+    echo -e "$ERROR_PREFIX Could not detect your operational system. You will be not able to install dependencies through this script."
 fi
 
 load_properties

@@ -12,5 +12,5 @@ load_properties() {
 }
 
 load_properties
-OSU_DIR="$PWD/files/drive_c/users/$USER/Local Settings/Application Data/osu!"
+OSU_DIR="$PWD/files/drive_c/users/$USER/AppData/Local/osu!"
 ln -sv "$OSU_DIR" ~/.osu

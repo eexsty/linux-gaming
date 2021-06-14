@@ -1,5 +1,7 @@
 export WINEPREFIX="/media/files/Games/linux-gaming-setup-scripts/osu!/files"
 export WINE_BIN=/usr/bin/wine
-export WRAPPER_COMMAND=gamemoderun
+#export WINE_BIN=/opt/wine-tkg-git-osu-6.10.r3.ge3cca687/bin/wine
+export WRAPPER_COMMAND=
 export STAGING_AUDIO_DURATION=5000
 export vblank_mode=0
+export STAGING_SHARED_MEMORY=1

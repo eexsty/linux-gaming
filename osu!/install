@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+export WINEARCH=win32
 OS_RELEASE_FILES=("/etc/os-release" "/usr/lib/os-release")
 
 for release in ${OS_RELEASE_FILES[@]} ; do

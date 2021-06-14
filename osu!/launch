@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export WINEARCH=win32
+
 escape_code() {
     echo "\033[$1m"
 }
@@ -12,5 +14,5 @@ load_properties() {
 }
 
 load_properties
-OSU_DIR="$PWD/files/drive_c/users/$USER/Local Settings/Application Data/osu!"
+OSU_DIR="$PWD/files/drive_c/users/$USER/AppData/Local/osu!"
 $WRAPPER_COMMAND "$WINE_BIN" "$OSU_DIR/osu!.exe" --gst-disable-segtrap --gst-disable-registry-fork "$@"
